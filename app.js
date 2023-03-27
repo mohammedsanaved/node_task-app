@@ -12,8 +12,15 @@ import cookieParser from "cookie-parser";
 import { errorMiddleware } from "./middlewares/error.js";
 import cors from "cors";
 
-export const app = express();
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  })
+);
 
+export const app = express();
 const schema = new mongoose.Schema({
   name: String,
   email: String,
@@ -23,15 +30,7 @@ const schema = new mongoose.Schema({
 //Using Middleware
 app.use(express.json());
 app.use(cookieParser());
-console.log(process.env.FRONTEND_URL);
-
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    credentials: true,
-  })
-);
+// console.log(process.env.FRONTEND_URL);
 
 // here UserRouter  is use
 app.use("/api/v1/users", UserRouter);
