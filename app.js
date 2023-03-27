@@ -24,11 +24,12 @@ const schema = new mongoose.Schema({
 app.use(express.json());
 app.use(cookieParser());
 console.log(process.env.FRONTEND_URL);
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL,
-    methods: ["GET", "POST", "DELETE", "PUT"],
-    credential: true,
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   })
 );
 
