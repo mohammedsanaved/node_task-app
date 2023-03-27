@@ -1,43 +1,35 @@
 import express from "express";
-import mongoose from "mongoose";
+import userRouter from "./routes/user.js";
+import taskRouter from "./routes/task.js";
 import { config } from "dotenv";
+import cookieParser from "cookie-parser";
+import { errorMiddleware } from "./middlewares/error.js";
+import cors from "cors";
+
+export const app = express();
 
 config({
   path: "./data/config.env",
 });
 
-import UserRouter from "./routes/user.js";
-import TaskRouter from "./routes/task.js";
-import cookieParser from "cookie-parser";
-import { errorMiddleware } from "./middlewares/error.js";
-import cors from "cors";
-
+// Using Middlewares
+app.use(express.json());
+app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: [process.env.FRONTEND_URL],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
 );
 
-export const app = express();
-const schema = new mongoose.Schema({
-  name: String,
-  email: String,
-  password: String,
-});
-
-//Using Middleware
-app.use(express.json());
-app.use(cookieParser());
-// console.log(process.env.FRONTEND_URL);
-
-// here UserRouter  is use
-app.use("/api/v1/users", UserRouter);
-app.use("/api/v1/task", TaskRouter);
+// Using routes
+app.use("/api/v1/users", userRouter);
+app.use("/api/v1/task", taskRouter);
 
 app.get("/", (req, res) => {
-  res.send("Home page");
+  res.send("Nice working");
 });
 
+// Using Error Middleware
 app.use(errorMiddleware);
