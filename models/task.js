@@ -7,8 +7,9 @@ const schema = new mongoose.Schema({
   },
   email: {
     type: String,
-    requried: true,
+    required: true,
     unique: true,
+    sparse: true,
   },
   description: {
     type: String,
@@ -24,8 +25,9 @@ const schema = new mongoose.Schema({
     required: true,
   },
   createdAt: {
-    type: "Date",
+    type: Date,
     default: Date.now,
   },
 });
+
 export const Task = mongoose.model("Task", schema);
