@@ -19,7 +19,7 @@ export const login = async (req, res, next) => {
     if (!isMatch)
       return next(new ErrorHandler("Invalid email & password", 400));
 
-    sendCookie(user, res, `Wellcome Back ${user.name}`, 200);
+    sendCookie(user, res, `Welcome Back ${user.name}`, 200);
   } catch (error) {
     next(error);
   }

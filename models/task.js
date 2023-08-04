@@ -1,15 +1,9 @@
 import mongoose from "mongoose";
 
-const schema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-  },
-  email: {
-    type: String,
-    required: true,
-    unique: true,
-    sparse: true,
   },
   description: {
     type: String,
@@ -30,4 +24,4 @@ const schema = new mongoose.Schema({
   },
 });
 
-export const Task = mongoose.model("Task", schema);
+export const Task = mongoose.model("Task", taskSchema);
